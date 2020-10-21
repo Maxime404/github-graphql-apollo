@@ -32,7 +32,7 @@ Hi, here are some rules to carry out this story oav;
 
 > Don't forget, there is no useless question :-)
 
-* You **MUST** return the project on Friday March, 23 at 16:00 pm by sending an MP on slack with the link of your github repo.
+* You **MUST** return the project on Sunday October, 25 at 23:42 pm.
 
 ## <a name='overview'>🐱 Overview</a>
 
