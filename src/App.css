@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+/* Let's do some custom CSS ! */
+
+.title {
+  font-size: 32px;
+  color: #555555;
+}
+
+.avatar {
+  border-radius: 50%;
+}
