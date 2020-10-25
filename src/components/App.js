@@ -5,7 +5,6 @@ import Profile from './Profile';
 import Repositories from './Repositories';
 
 import gql from "graphql-tag";
-import { Query } from "react-apollo";
 
 export default class App extends Component {
   constructor(props) {
@@ -14,7 +13,8 @@ export default class App extends Component {
     this.state = {
       viewer: {},
       profileData: "",
-      repositoriesData: ""
+      repositoriesData: "",
+      commitTotalCount: 0
     }
   }
 
@@ -33,7 +33,7 @@ export default class App extends Component {
         }
     `})
       .then(result => {
-        const viewer = result.data.viewer;
+        const viewer = result.data.viewer || process.env.REACT_APP_DEFAULT_VIEWER;
 
         this.setState({ viewer });
         this.setAllQueries();
@@ -109,8 +109,23 @@ export default class App extends Component {
         }
       }
     `}).then(result => {
-      this.setState({ repositoriesData: result.data });
-    });
+        this.setState({ repositoriesData: result.data });
+        this.calculateCommits(result.data);
+      });
+  }
+
+  calculateCommits(repositoriesData) {
+    if (repositoriesData) {
+      const repositoriesData = this.state.repositoriesData;
+      let commitTotalCount = 0
+
+      repositoriesData.user.repositories.nodes
+        .map((repository) => {
+          commitTotalCount += repository.ref ? repository.ref.target.history.totalCount : 0;
+        });
+
+      this.setState({ commitTotalCount });
+    }
   }
 
   render() {
@@ -119,7 +134,7 @@ export default class App extends Component {
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "50px", backgroundColor: "#89d4e8" }}></div>
         <div style={{ position: "absolute", top: 50, left: 0, right: 0, height: "285px", backgroundColor: "#F0F4F1" }}>
           <div class="container mt-5">
-            <Profile data={this.state.profileData} />
+            <Profile data={this.state.profileData} commits={this.state.commitTotalCount} />
             <Repositories viewerLogin={this.state.viewer.login} data={this.state.repositoriesData} />
           </div>
         </div>

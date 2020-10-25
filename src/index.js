@@ -9,6 +9,10 @@ import { ApolloProvider } from "react-apollo";
 
 const client = new ApolloClient({
   uri: "https://api.github.com/graphql",
+  onError: ({ networkError, graphQLErrors }) => {
+    console.log('graphQLErrors :', graphQLErrors)
+    console.log('networkError :', networkError)
+  },
   request: async operation => {
     operation.setContext({
       headers: {
@@ -20,7 +24,7 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App query={client.query}/>
+    <App query={client.query} />
   </ApolloProvider>,
   document.getElementById("root")
 );

@@ -11,7 +11,7 @@ function Profil(props) {
         <div class="my-5">
             <div class="row d-flex align-items-center">
                 <p class="col-md-10 title">Repositories</p>
-                <span class="col-md-2">{`${props.data.user.repositories.totalCount} repos`}</span>
+                <span class="col-md-2">{`${props.data.user.repositories.nodes.length} repos`}</span>
             </div>
             <div class="row mb-05 d-flex align-items-center repositories_line_color1">
                 <span class="col-md-1 text-center">#</span>
@@ -24,7 +24,7 @@ function Profil(props) {
             {props.data.user.repositories.nodes ? props.data.user.repositories.nodes
                 .map((repository, index) => (
                     <div class={`row d-flex align-items-center mb-05 ${index % 2 ? "repositories_line_color1" : "repositories_line_color2"}`}>
-                        <span class="col-md-1 text-center d-inline ">{index}</span>
+                        <span class="col-md-1 text-center d-inline ">{++index}</span>
                         <div class="col-md-3 text-center">
                             <img class="d-inline mr-3 repoGithubIcon" src={repoGithubIcon} alt='repo-github-icon' />
                             <span class="d-inline font-weight-bold">{repository.owner.login}</span>
