@@ -5,7 +5,7 @@ import './../App.css';
 function Profil(props) {
     
     return props.data ? (
-        <div>
+        <div class="my-5">
             <div class="row">
                 <p class="col-md-6 align-self-end title">{props.data.user.name}</p>
                 <p class="col-md-6 align-self-end">{props.data.user.bio}</p>

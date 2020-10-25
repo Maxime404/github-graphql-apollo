@@ -39,6 +39,10 @@
 
 /* Let's do some custom CSS ! */
 
+p {
+  color: #555555;
+}
+
 .title {
   font-size: 32px;
   color: #555555;
@@ -46,4 +50,18 @@
 
 .avatar {
   border-radius: 50%;
+}
+
+.repositories_line_1 {
+  background-color: #e3eae5;
+  height: 40px;
+}
+
+.repositories_line_2 {
+  background-color: #f0f4f1;
+  height: 40px;
+}
+
+.repoGithubIcon {
+  height: 30px;
 }

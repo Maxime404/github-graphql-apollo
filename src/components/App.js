@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import './../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Profile from './Profile'
+import Profile from './Profile';
+import Repositories from './Repositories';
 
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
@@ -12,7 +13,8 @@ export default class App extends Component {
 
     this.state = {
       viewer: {},
-      profileData: ""
+      profileData: "",
+      repositoriesData: ""
     }
   }
 
@@ -39,10 +41,11 @@ export default class App extends Component {
   }
 
   setAllQueries() {
-    this.setProfileQuery();
+    this.getProfileData();
+    this.getRepositoriesData();
   }
 
-  setProfileQuery() {
+  getProfileData() {
     this.props.query({
       query: gql`
       {
@@ -60,29 +63,42 @@ export default class App extends Component {
       });
   }
 
-  render() {
-
-    const a = gql`
-    query { 
-      user(login: "Maxime404") {
-        repositories(first: 100) {
-          totalCount,
-          nodes {
-            nameWithOwner
-            updatedAt
-            createdAt
-            primaryLanguage {
+  getRepositoriesData() {
+    this.props.query({
+      query: gql`
+      { 
+        user(login: "${this.state.viewer.login}") {
+          repositories(first: 100) {
+            totalCount,
+            nodes {
+              nameWithOwner
               name
-            }
-            languages(first: 100) {
-              nodes {
+              owner {
+                login
+              }
+              description
+              collaborators {
+                totalCount
+              }
+              createdAt
+              primaryLanguage {
                 name
+              }
+              languages(first: 100) {
+                nodes {
+                  name
+                }
               }
             }
           }
         }
       }
-    }`
+    `}).then(result => {
+      this.setState({ repositoriesData: result.data });
+    });
+  }
+
+  render() {
 
     const b = gql`
     query { 
@@ -107,10 +123,9 @@ export default class App extends Component {
       <div>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "50px", backgroundColor: "#89d4e8" }}></div>
         <div style={{ position: "absolute", top: 50, left: 0, right: 0, height: "285px", backgroundColor: "#F0F4F1" }}>
-          <div class="container">
-            <div class="mt-5">
-              <Profile data={this.state.profileData} />
-            </div>
+          <div class="container mt-5">
+            <Profile data={this.state.profileData} />
+            <Repositories viewerLogin={this.state.viewer.login} data={this.state.repositoriesData} />
           </div>
         </div>
       </div>
