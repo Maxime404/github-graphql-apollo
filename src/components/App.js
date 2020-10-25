@@ -53,9 +53,15 @@ export default class App extends Component {
             repositories {
               totalCount
             },
-            name,
-            bio,
+            name
+            bio
             avatarUrl
+            followers {
+              totalCount
+            }
+            following {
+              totalCount
+            }
           }
       }
     `}).then(result => {
@@ -69,7 +75,7 @@ export default class App extends Component {
       { 
         user(login: "${this.state.viewer.login}") {
           repositories(first: 100) {
-            totalCount,
+            totalCount
             nodes {
               nameWithOwner
               name
@@ -89,6 +95,15 @@ export default class App extends Component {
                   name
                 }
               }
+              ref(qualifiedName: "master") {
+                target {
+                    ... on Commit {
+                        history(author: {id: "${this.state.viewer.id}"}) {
+                            totalCount
+                        }
+                    }
+                } 
+              }
             }
           }
         }
@@ -99,26 +114,6 @@ export default class App extends Component {
   }
 
   render() {
-
-    const b = gql`
-    query { 
-      repository(name: "trocify-front", owner: "Maxime404") {
-        ref(qualifiedName: "master") {
-            target {
-                ... on Commit {
-                    history(author: {id: "MDQ6VXNlcjQ1Nzk0NjM0"}) {
-                        totalCount
-                        nodes {
-                            authoredDate
-                        }
-                    }
-                }
-            } 
-          }
-        }
-      }`
-
-
     return (
       <div>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "50px", backgroundColor: "#89d4e8" }}></div>

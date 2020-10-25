@@ -39,11 +39,12 @@
 
 /* Let's do some custom CSS ! */
 
-p {
+span {
   color: #555555;
 }
 
 .title {
+  font-weight: 600;
   font-size: 32px;
   color: #555555;
 }
@@ -52,16 +53,34 @@ p {
   border-radius: 50%;
 }
 
-.repositories_line_1 {
+.repositories_line_color1 {
   background-color: #e3eae5;
   height: 40px;
 }
 
-.repositories_line_2 {
+.repositories_line_color2 {
   background-color: #f0f4f1;
   height: 40px;
 }
 
 .repoGithubIcon {
-  height: 30px;
+  height: 20px;
+}
+
+.pt-6 {
+  padding-top: 6rem!important;
+}
+
+.mb-05 {
+  margin-bottom: .17rem!important;
+}
+
+.profileCard {
+  padding: 10px;
+  margin-right: 10px;
+  min-width: 90px;
+  background-color: #e3eae5;
+}
+.ProfileCardGreenColor {
+  background-color: #c0f1e2;
 }
